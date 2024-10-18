@@ -15,6 +15,7 @@ import ErrorMessage from "./ErrorMessage";
 import aiAvatar from "../assets/icons/ai-avatar.png";
 import TypingIndicator from "./TypingIndicator";
 import { Menu } from "lucide-react";
+import { nanoid } from "nanoid";
 
 const API_KEY = import.meta.env.VITE_API_KEY;
 
@@ -87,7 +88,7 @@ const ChatInterface: React.FC = () => {
     if (text.trim() === "") return;
 
     const userMessage = {
-      id: Date.now(),
+      id: nanoid(),
       content: text,
       role: Role.USER,
       timestamp: Date.now(),
@@ -98,7 +99,7 @@ const ChatInterface: React.FC = () => {
 
     try {
       const aiMessage = {
-        id: Date.now(),
+        id: nanoid(),
         content: API_KEY
           ? await getAIResponse(text, messages)
           : await getDummyAPIResponse(text),

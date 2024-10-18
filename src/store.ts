@@ -6,7 +6,7 @@ export enum Role {
 }
 
 export interface Message {
-  id: number;
+  id: string;
   content: string;
   role: Role;
   timestamp: number;
