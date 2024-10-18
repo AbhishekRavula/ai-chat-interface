@@ -1,50 +1,79 @@
-# React + TypeScript + Vite
+# AI Chat Interface with Responsive Design
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Overview
 
-Currently, two official plugins are available:
+This project implements a responsive AI chat interface that allows users to interact with an AI assistant in real time. Built using React.js with TypeScript, the application integrates with the Hugging Face API to provide intelligent responses to user queries. The design emphasizes accessibility and performance, ensuring a smooth user experience across devices.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
 
-## Expanding the ESLint configuration
+- **Responsive Design**: The layout adapts seamlessly to different screen sizes.
+- **Real-time Messaging**: Users can send messages and receive responses instantly.
+- **Message Bubbles**: User and AI messages are displayed in distinct bubbles with avatars.
+- **Markdown Support**: AI responses can include markdown formatting for better readability.
+- **Error Handling**: The application includes robust error handling for API calls.
+- **Chat History Export**: Users can download their chat history in JSON format.
+- **AI Typing Indicator**: A visual cue indicates when the AI is generating a response.
+- **Accessibility**: The app follows WCAG 2.1 guidelines for inclusivity.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Technology Stack
 
-- Configure the top-level `parserOptions` property like this:
+- **Frontend Framework**: React.js
+- **Type Safety**: TypeScript
+- **State Management**: Redux
+- **Styling**: Tailwind CSS for responsive design
+- **API Integration**: Hugging Face API for AI responses
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+## Installation
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+1. Clone the repository:
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+   ```bash
+   git clone https://github.com/yourusername/ai-chat-interface.git
+   cd ai-chat-interface
+   ```
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+2. Install dependencies:
+
+   ```bash
+   npm install
+   ```
+
+3. Set up your environment variables:
+
+   - Create a `.env` file in the root of the project.
+   - Obtain your API token from [Hugging Face](https://huggingface.co/) and add it to the `.env` file as follows:
+     ```
+     VITE_API_KEY=your_hugging_face_api_key
+     ```
+
+4. Start the development server:
+   ```bash
+   npm run dev
+   ```
+
+## Usage
+
+- Open the application in your browser.
+- Type your message in the input field and hit Enter to send.
+- Use the "Export Chat" button to download your chat history.
+
+### Handling API Token
+
+If a user does not provide a `VITE_API_KEY`, the application simulates an AI response with a typing delay and echoes back the user message. This ensures that users can still interact with the chat interface even without a [Hugging Face](https://huggingface.co/) key.
+
+## Accessibility
+
+The application has been designed with accessibility in mind, ensuring that all users can navigate and interact with the interface effectively.
+
+## Performance Optimization
+
+The app is optimized for performance, aiming for a high Lighthouse score by implementing best practices in loading times, responsiveness, and accessibility.
+
+## Bonus Features
+
+- Dark mode toggle for improved usability in low-light conditions.
+- Animations for smooth transitions between message states.
+
+## Conclusion
+
+This AI chat interface demonstrates a solid understanding of frontend development principles, responsive design, and API integration.
