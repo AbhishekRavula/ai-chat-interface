@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from "react";
 import ReactMarkdown from "react-markdown";
 import aiAvatar from "../assets/icons/ai-avatar.png";
 import userAvatar from "../assets/icons/user-avatar.png";
-import { Message, Sender } from "../store";
+import { Message, Role } from "../store";
 
 interface MessageListProps {
   messages: Message[];
@@ -27,28 +27,28 @@ const MessageList: React.FC<MessageListProps> = ({ messages }) => {
           <div
             key={message.id}
             className={`flex gap-2 transform transition-all duration-300 ease-in-out"
-             ${message.sender === Sender.USER ? "flex-row-reverse" : "flex-row"}
+             ${message.role === Role.USER ? "flex-row-reverse" : "flex-row"}
              ${index === messages.length - 1 ? "animate-fade-in-up" : ""}
             `}
           >
             <img
-              src={message.sender === Sender.USER ? userAvatar : aiAvatar}
-              alt={`${message.sender} avatar`}
+              src={message.role === Role.USER ? userAvatar : aiAvatar}
+              alt={`${message.role} avatar`}
               className="w-6 h-6 rounded-full"
             />
             <div
               className={`max-w-xs lg:max-w-md xl:max-w-xl px-4 py-2 rounded-lg break-words text-message overflow-x-auto custom-scrollbar 
-                ${message.sender === Sender.AI ? "markdown" : ""}
+                ${message.role === Role.AI ? "markdown" : ""}
                 ${
-                  message.sender === Sender.USER
+                  message.role === Role.USER
                     ? "bg-user-message-bg text-user-message-text"
                     : "bg-ai-message-bg text-ai-message-text"
                 }`}
             >
-              {message.sender === Sender.AI ? (
-                <ReactMarkdown>{message.text}</ReactMarkdown>
+              {message.role === Role.AI ? (
+                <ReactMarkdown>{message.content}</ReactMarkdown>
               ) : (
-                <span>{message.text}</span>
+                <span>{message.content}</span>
               )}
               <div className="flex justify-end">
                 <span className="text-xs opacity-75">{timestamp}</span>

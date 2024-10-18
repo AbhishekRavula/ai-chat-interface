@@ -1,6 +1,13 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { RootState, Sender, addMessage, setAiTyping, setError } from "../store";
+import {
+  Message,
+  RootState,
+  Role,
+  addMessage,
+  setAiTyping,
+  setError,
+} from "../store";
 import MessageList from "./MessageList";
 import InputArea from "./InputArea";
 import Sidebar from "./Sidebar";
@@ -28,13 +35,13 @@ const ChatInterface: React.FC = () => {
     }
   }, [messages]);
 
-  const getAIResponse = async (input: string) => {
+  const getAIResponse = async (input: string, messages: Message[]) => {
     const url =
-      "https://api-inference.huggingface.co/models/google/gemma-1.1-2b-it/v1/chat/completions";
+      "https://api-inference.huggingface.co/models/Qwen/Qwen2.5-72B-Instruct/v1/chat/completions";
 
     const data = {
-      model: "google/gemma-1.1-2b-it",
-      messages: [{ role: Sender.USER, content: input }],
+      model: "Qwen/Qwen2.5-72B-Instruct",
+      messages: [...messages, { role: Role.USER, content: input }],
       temperature: 0.5,
       max_tokens: 1024,
       top_p: 0.7,
@@ -70,6 +77,8 @@ const ChatInterface: React.FC = () => {
       throw new Error("Failed to get AI response");
     }
 
+    await new Promise((resolve) => setTimeout(resolve, 2000)); // Simulate AI Typing
+
     const data = await response.json();
     return data.body;
   };
@@ -79,8 +88,8 @@ const ChatInterface: React.FC = () => {
 
     const userMessage = {
       id: Date.now(),
-      text,
-      sender: Sender.USER,
+      content: text,
+      role: Role.USER,
       timestamp: Date.now(),
     };
 
@@ -90,14 +99,12 @@ const ChatInterface: React.FC = () => {
     try {
       const aiMessage = {
         id: Date.now(),
-        text: API_KEY
-          ? await getAIResponse(text)
+        content: API_KEY
+          ? await getAIResponse(text, messages)
           : await getDummyAPIResponse(text),
-        sender: Sender.AI,
+        role: Role.AI,
         timestamp: Date.now(),
       };
-
-      if (!API_KEY) await new Promise((resolve) => setTimeout(resolve, 2000)); // Simulate AI Typing
 
       dispatch(addMessage(aiMessage));
     } catch {

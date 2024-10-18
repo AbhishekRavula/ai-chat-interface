@@ -1,14 +1,14 @@
 import { configureStore, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-export enum Sender {
+export enum Role {
   USER = "user",
-  AI = "ai",
+  AI = "assistant",
 }
 
 export interface Message {
   id: number;
-  text: string;
-  sender: Sender;
+  content: string;
+  role: Role;
   timestamp: number;
 }
 
