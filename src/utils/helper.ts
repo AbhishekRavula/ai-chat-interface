@@ -8,18 +8,20 @@ export const getReadableTimestamp = (timestamp: number) => {
 };
 
 export const downloadChatHistory = (messages: Message[]) => {
-  const headers = ["Timestamp", "Sender", "Message"];
-  const rows = messages.map((msg) =>
-    [getReadableTimestamp(msg.timestamp), msg.role, msg.content].join(",")
-  );
-  const csvContent = [headers.join(","), ...rows].join("\n");
+  const content = messages.map(({ timestamp, role, content }) => ({
+    timestamp: getReadableTimestamp(timestamp),
+    sender: role,
+    message: content,
+  }));
 
-  const blob = new Blob([csvContent], { type: "text/csv" });
+  const jsonContent = JSON.stringify(content, null, 2); // pretty-print JSON
+
+  const blob = new Blob([jsonContent], { type: "application/json" });
   const url = URL.createObjectURL(blob);
 
   const link = document.createElement("a");
   link.href = url;
-  link.download = "chat-history.csv";
+  link.download = "chat-history.json";
 
   link.click();
   URL.revokeObjectURL(url);
