@@ -1,0 +1,43 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Markdown content styles */
+.markdown > :first-child {
+  all: revert;
+  margin: 0;
+  padding: 0;
+}
+
+/* Theming styles */
+.light {
+  --chat-bg: #ffffff;
+
+  --user-message-bg: #ecf3fe;
+  --ai-message-bg: #f2f2f2;
+
+  --user-message-text: black;
+  --ai-message-text: black;
+
+  --surface: #f6f8fc;
+
+  --message-input-bg: #eaf1fb;
+
+  --paper: #eaf1fb;
+}
+
+.dark {
+  --chat-bg: #131314;
+
+  --user-message-bg: #003355;
+  --ai-message-bg: #303030;
+
+  --user-message-text: white;
+  --ai-message-text: white;
+
+  --surface: #28292a;
+
+  --message-input-bg: #323437;
+
+  --paper: #323437;
+}
