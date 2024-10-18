@@ -6,7 +6,7 @@ import ChatInterface from "./components/ChatInterface";
 const App: React.FC = () => {
   return (
     <Provider store={store}>
-      <div className="min-h-screen bg-paper">
+      <div className="min-h-dvh bg-paper">
         <ChatInterface />
       </div>
     </Provider>
