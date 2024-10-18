@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import { Sun, Moon, X } from "lucide-react";
+import { RootState, setError } from "../store";
+import { useDispatch, useSelector } from "react-redux";
+import { downloadChatHistory } from "../utils/helper";
 
 interface SidebarProps {
   isOpen: boolean;
@@ -24,6 +27,10 @@ const getTheme = () => {
 };
 
 const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
+  const dispatch = useDispatch();
+
+  const { messages } = useSelector((state: RootState) => state.chat);
+
   const [theme, setTheme] = useState(getTheme);
 
   const toggleDarkMode = () => {
@@ -37,6 +44,18 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
       document.documentElement.classList.add("dark");
     } else {
       document.documentElement.classList.add("light");
+    }
+  };
+
+  const exportChatHistory = () => {
+    try {
+      if (messages.length) {
+        downloadChatHistory(messages);
+      } else {
+        dispatch(setError("Empty chat history to export"));
+      }
+    } catch {
+      dispatch(setError("Failed to export chat. Please try again."));
     }
   };
 
@@ -70,12 +89,13 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
           <nav className="flex-1 overflow-y-auto">
             <ul className="p-4 space-y-2">
               <li>
-                <a
-                  href="#"
-                  className="block px-4 py-2 rounded-md hover:bg-paper dark:hover:bg-paper text-dark dark:text-white"
+                <button
+                  type="button"
+                  onClick={exportChatHistory}
+                  className="block w-full text-left px-4 py-2 rounded-md hover:bg-paper dark:hover:bg-paper text-dark dark:text-white"
                 >
                   Export Chat
-                </a>
+                </button>
               </li>
             </ul>
           </nav>

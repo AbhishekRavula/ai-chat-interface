@@ -3,6 +3,7 @@ import ReactMarkdown from "react-markdown";
 import aiAvatar from "../assets/icons/ai-avatar.png";
 import userAvatar from "../assets/icons/user-avatar.png";
 import { Message, Role } from "../store";
+import { getReadableTimestamp } from "../utils/helper";
 
 interface MessageListProps {
   messages: Message[];
@@ -18,11 +19,6 @@ const MessageList: React.FC<MessageListProps> = ({ messages }) => {
   return (
     <div className="space-y-4 z-0">
       {messages.map((message, index) => {
-        const timestamp = new Date(message.timestamp).toLocaleTimeString([], {
-          hour: "2-digit",
-          minute: "2-digit",
-        });
-
         return (
           <div
             key={message.id}
@@ -51,7 +47,9 @@ const MessageList: React.FC<MessageListProps> = ({ messages }) => {
                 <span>{message.content}</span>
               )}
               <div className="flex justify-end">
-                <span className="text-xs opacity-75">{timestamp}</span>
+                <span className="text-xs opacity-75">
+                  {getReadableTimestamp(message.timestamp)}
+                </span>
               </div>
             </div>
           </div>
