@@ -82,6 +82,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
             <button
               className="text-gray-500 hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 rounded-md p-2 sm:hidden"
               onClick={onClose}
+              aria-label="Close Sidebar"
             >
               <X className="text-gray-800 dark:text-gray-200" />
             </button>
@@ -93,6 +94,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
                   type="button"
                   onClick={exportChatHistory}
                   className="block w-full text-left px-4 py-2 rounded-md hover:bg-paper dark:hover:bg-paper text-dark dark:text-white"
+                  aria-label="Export Chat"
                 >
                   Export Chat
                 </button>
@@ -103,6 +105,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
             <button
               onClick={toggleDarkMode}
               className="flex items-center justify-center w-full px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-200 bg-gray-100 dark:bg-gray-700 rounded-md hover:bg-gray-200 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
+              aria-label="Change Theme"
             >
               {theme === "dark" ? (
                 <Sun className="h-5 w-5 mr-2" />

@@ -52,6 +52,7 @@ const InputArea: React.FC<InputAreaProps> = ({ onSendMessage }) => {
         <button
           type="submit"
           className="self-end focus:outline-none focus:ring-2 focus:ring-blue-500 mb-2"
+          aria-label="Send Message"
         >
           <SendHorizontal className="text-gray-800 dark:text-gray-200" />
         </button>

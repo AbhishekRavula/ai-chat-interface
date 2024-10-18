@@ -121,6 +121,7 @@ const ChatInterface: React.FC = () => {
       <div className="flex-1 flex flex-col rounded-tl-lg rounded-bl-lg gap-1 m-2">
         <header className="bg-surface shadow-sm p-4 flex items-center h-16 rounded-lg">
           <button
+            aria-label="Open Sidebar"
             className="text-gray-500 hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 rounded-md p-2 sm:hidden"
             onClick={() => setIsSidebarOpen(true)}
           >
