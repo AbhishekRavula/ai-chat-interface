@@ -116,7 +116,7 @@ const ChatInterface: React.FC = () => {
   };
 
   return (
-    <div className="flex h-screen">
+    <div className="flex h-dvh bg-paper">
       <Sidebar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
       <div className="flex-1 flex flex-col rounded-tl-lg rounded-bl-lg gap-1 m-2">
         <header className="bg-surface shadow-sm p-4 flex items-center h-16 rounded-lg">

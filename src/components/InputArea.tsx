@@ -27,6 +27,11 @@ const InputArea: React.FC<InputAreaProps> = ({ onSendMessage }) => {
     if (message.trim()) {
       onSendMessage(message);
       setMessage("");
+
+      // To prevent loosing of focus for textarea
+      if (textareaRef.current) {
+        textareaRef.current.focus();
+      }
     }
   };
 
