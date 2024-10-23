@@ -93,7 +93,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
                 <button
                   type="button"
                   onClick={exportChatHistory}
-                  className="block w-full text-left px-4 py-2 rounded-md hover:bg-paper dark:hover:bg-paper text-dark dark:text-white"
+                  className="block w-full text-left px-4 py-2 rounded-md hover:bg-paper dark:hover:bg-paper text-dark dark:text-white focus:outline-none focus:ring-2 focus:ring-gray-500"
                   aria-label="Export Chat"
                 >
                   Export Chat
@@ -104,7 +104,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
           <div className="p-4 border-t border-gray-200 dark:border-gray-700">
             <button
               onClick={toggleDarkMode}
-              className="flex items-center justify-center w-full px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-200 bg-gray-100 dark:bg-gray-700 rounded-md hover:bg-gray-200 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
+              className="flex items-center justify-center w-full px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-200 bg-paper dark:bg-paper rounded-md hover:bg-slate-200 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500"
               aria-label="Change Theme"
             >
               {theme === "dark" ? (
