@@ -16,46 +16,54 @@ const MessageList: React.FC<MessageListProps> = ({ messages }) => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  return (
-    <div className="space-y-4 z-0">
-      {messages.map((message, index) => {
-        return (
-          <div
-            key={message.id}
-            className={`flex gap-2 transform transition-all duration-300 ease-in-out"
+  if (messages.length > 0) {
+    return (
+      <div className="space-y-4 z-0">
+        {messages.map((message, index) => {
+          return (
+            <div
+              key={message.id}
+              className={`flex gap-2 transform transition-all duration-300 ease-in-out"
              ${message.role === Role.USER ? "flex-row-reverse" : "flex-row"}
              ${index === messages.length - 1 ? "animate-fade-in-up" : ""}
             `}
-          >
-            <img
-              src={message.role === Role.USER ? userAvatar : aiAvatar}
-              alt={`${message.role} avatar`}
-              className="w-6 h-6 rounded-full"
-            />
-            <div
-              className={`max-w-xs lg:max-w-md xl:max-w-xl px-4 py-2 rounded-lg break-words text-message overflow-x-auto custom-scrollbar 
+            >
+              <img
+                src={message.role === Role.USER ? userAvatar : aiAvatar}
+                alt={`${message.role} avatar`}
+                className="w-6 h-6 rounded-full"
+              />
+              <div
+                className={`max-w-xs lg:max-w-md xl:max-w-xl px-4 py-2 rounded-lg break-words text-message overflow-x-auto custom-scrollbar 
                 ${message.role === Role.AI ? "markdown" : ""}
                 ${
                   message.role === Role.USER
                     ? "bg-user-message-bg text-user-message-text"
                     : "bg-ai-message-bg text-ai-message-text"
                 }`}
-            >
-              {message.role === Role.AI ? (
-                <ReactMarkdown>{message.content}</ReactMarkdown>
-              ) : (
-                <span>{message.content}</span>
-              )}
-              <div className="flex justify-end">
-                <span className="text-xs opacity-75">
-                  {getReadableTimestamp(message.timestamp)}
-                </span>
+              >
+                {message.role === Role.AI ? (
+                  <ReactMarkdown>{message.content}</ReactMarkdown>
+                ) : (
+                  <span>{message.content}</span>
+                )}
+                <div className="flex justify-end">
+                  <span className="text-xs opacity-75">
+                    {getReadableTimestamp(message.timestamp)}
+                  </span>
+                </div>
               </div>
             </div>
-          </div>
-        );
-      })}
-      <div ref={messagesEndRef} />
+          );
+        })}
+        <div ref={messagesEndRef} />
+      </div>
+    );
+  }
+
+  return (
+    <div className="flex h-full justify-center items-center text-gray-500">
+      It’s quiet here… Type a question to chat with the AI
     </div>
   );
 };
