@@ -62,7 +62,7 @@ const MessageList: React.FC<MessageListProps> = ({ messages }) => {
   }
 
   return (
-    <div className="flex h-full justify-center items-center text-gray-500">
+    <div className="flex h-full justify-center items-center text-gray-700 dark:text-gray-300">
       It’s quiet here… Type a question to chat with the AI
     </div>
   );
