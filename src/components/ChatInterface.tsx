@@ -144,10 +144,10 @@ const ChatInterface: React.FC = () => {
     <div className="flex h-dvh bg-paper">
       <Sidebar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
       <div className="flex-1 flex flex-col rounded-tl-lg rounded-bl-lg gap-1 m-2">
-        <header className="bg-surface shadow-sm p-4 flex items-center h-16 rounded-lg">
+        <header className="bg-surface shadow-sm p-4 flex items-center h-16 rounded-lg sm:hidden">
           <button
             aria-label="Open Sidebar"
-            className="text-gray-500 hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 rounded-md p-2 sm:hidden"
+            className="text-gray-500 hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 rounded-md p-2"
             onClick={() => setIsSidebarOpen(true)}
           >
             <Menu className="text-gray-800 dark:text-gray-200" />

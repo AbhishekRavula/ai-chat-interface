@@ -43,19 +43,19 @@ const InputArea: React.FC<InputAreaProps> = ({ onSendMessage }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="flex items-center">
+    <form onSubmit={handleSubmit} className="relative flex items-center">
       <textarea
         ref={textareaRef}
         value={message}
         onChange={(e) => setMessage(e.target.value)}
         onKeyDown={handleKeyDown}
         placeholder="Type your message..."
-        className="max-h-36 text-black dark:text-white bg-message-input-bg flex-1 resize-none rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-500 p-2 mr-2 custom-scrollbar"
+        className="max-h-36 text-black dark:text-white bg-message-input-bg flex-1 resize-none rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-500 p-3 pr-10 custom-scrollbar"
         rows={1}
       />
       <button
         type="submit"
-        className="self-end focus:outline-none focus:ring-2 focus:ring-gray-500 mb-2"
+        className="absolute right-3 bottom-3 focus:outline-none focus:ring-2 focus:ring-gray-500"
         aria-label="Send Message"
       >
         <SendHorizontal className="text-gray-800 dark:text-gray-200" />

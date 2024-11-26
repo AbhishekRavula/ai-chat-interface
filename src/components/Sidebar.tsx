@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Sun, Moon, X } from "lucide-react";
+import { Sun, Moon, X, ArrowRightFromLine } from "lucide-react";
 import { RootState, setError } from "../store";
 import { useDispatch, useSelector } from "react-redux";
 import { downloadChatHistory } from "../utils/helper";
@@ -75,10 +75,10 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
         }`}
       >
         <div className="h-full flex flex-col">
-          <div className="flex items-center justify-between h-16 px-4 border-b border-gray-200 dark:border-gray-700">
-            <h2 className="text-lg font-semibold text-black dark:text-white">
-              Menu
-            </h2>
+          <div className="flex items-center justify-center p-4 border-b border-gray-200 dark:border-gray-700">
+            <p className="flex-1 text-lg font-semibold text-black dark:text-white text-center hidden sm:block">
+              AI Chat Interface
+            </p>
             <button
               className="text-gray-500 hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 rounded-md p-2 sm:hidden"
               onClick={onClose}
@@ -93,9 +93,10 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
                 <button
                   type="button"
                   onClick={exportChatHistory}
-                  className="block w-full text-left px-4 py-2 rounded-md hover:bg-paper dark:hover:bg-paper text-dark dark:text-white focus:outline-none focus:ring-2 focus:ring-gray-500"
+                  className="flex gap-4 items-center w-full text-left px-4 py-2 rounded-md hover:bg-paper dark:hover:bg-paper text-dark dark:text-white focus:outline-none focus:ring-2 focus:ring-gray-500"
                   aria-label="Export Chat"
                 >
+                  <ArrowRightFromLine size={20} />
                   Export Chat
                 </button>
               </li>
