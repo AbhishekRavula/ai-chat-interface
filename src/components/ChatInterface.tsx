@@ -5,6 +5,7 @@ import {
   RootState,
   Role,
   addMessage,
+  updateLastMessage,
   setAiTyping,
   setError,
 } from "../store";
@@ -12,8 +13,6 @@ import MessageList from "./MessageList";
 import InputArea from "./InputArea";
 import Sidebar from "./Sidebar";
 import ErrorMessage from "./ErrorMessage";
-import aiAvatar from "../assets/icons/ai-avatar.png";
-import TypingIndicator from "./TypingIndicator";
 import { Menu } from "lucide-react";
 import { nanoid } from "nanoid";
 
@@ -23,9 +22,7 @@ const ChatInterface: React.FC = () => {
   const chatContainerRef = useRef<HTMLDivElement>(null);
   const dispatch = useDispatch();
 
-  const { messages, isAiTyping, error } = useSelector(
-    (state: RootState) => state.chat
-  );
+  const { messages, error } = useSelector((state: RootState) => state.chat);
 
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
@@ -46,6 +43,7 @@ const ChatInterface: React.FC = () => {
       temperature: 0.5,
       max_tokens: 1024,
       top_p: 0.7,
+      stream: true,
     };
 
     const response = await fetch(url, {
@@ -61,8 +59,30 @@ const ChatInterface: React.FC = () => {
       throw new Error("Failed to get AI response");
     }
 
-    const result = await response.json();
-    return result.choices[0].message.content;
+    const reader = response.body?.getReader();
+    const decoder = new TextDecoder();
+    let accumulatedResponse = "";
+
+    while (true) {
+      const { done, value } = await reader!.read();
+      if (done) break;
+
+      const chunk = decoder.decode(value);
+      const lines = chunk.split("\n");
+      const parsedLines = lines
+        .map((line) => line.replace(/^data: /, "").trim())
+        .filter((line) => line !== "" && line !== "[DONE]")
+        .map((line) => JSON.parse(line));
+
+      for (const parsedLine of parsedLines) {
+        if (parsedLine.choices[0].delta.content) {
+          accumulatedResponse += parsedLine.choices[0].delta.content;
+          dispatch(updateLastMessage(accumulatedResponse));
+        }
+      }
+    }
+
+    return accumulatedResponse;
   };
 
   const getDummyAPIResponse = async (input: string) => {
@@ -100,14 +120,19 @@ const ChatInterface: React.FC = () => {
     try {
       const aiMessage = {
         id: nanoid(),
-        content: API_KEY
-          ? await getAIResponse(text, messages)
-          : await getDummyAPIResponse(text),
+        content: "",
         role: Role.AI,
         timestamp: Date.now(),
       };
 
       dispatch(addMessage(aiMessage));
+
+      if (API_KEY) {
+        await getAIResponse(text, messages);
+      } else {
+        const dummyResponse = await getDummyAPIResponse(text);
+        dispatch(updateLastMessage(dummyResponse));
+      }
     } catch {
       dispatch(setError("Failed to get AI response. Please try again."));
     } finally {
@@ -131,25 +156,16 @@ const ChatInterface: React.FC = () => {
             AI Chat Interface
           </h1>
         </header>
-        <div className="flex-1 overflow-hidden bg-chat-bg rounded-lg">
-          <div
-            ref={chatContainerRef}
-            className="h-full overflow-y-auto p-4 custom-scrollbar"
-          >
-            <MessageList messages={messages} />
-            {isAiTyping && (
-              <div className={`flex gap-2 items-center`}>
-                <img
-                  src={aiAvatar}
-                  alt={"ai avatar"}
-                  className="w-6 h-6 rounded-full"
-                />
-                <TypingIndicator />
-              </div>
-            )}
+        <div className="flex-1 flex justify-center bg-chat-bg rounded-lg overflow-y-auto custom-scrollbar">
+          <div className="w-full max-w-4xl flex flex-col">
+            <div ref={chatContainerRef} className="flex-1 p-4">
+              <MessageList messages={messages} />
+            </div>
+            <div className="sticky bottom-0 p-4 pt-0 bg-chat-bg">
+              <InputArea onSendMessage={handleSendMessage} />
+            </div>
           </div>
         </div>
-        <InputArea onSendMessage={handleSendMessage} />
         {!!error && (
           <ErrorMessage
             message={error}

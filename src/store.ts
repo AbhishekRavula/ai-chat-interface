@@ -37,10 +37,16 @@ const chatSlice = createSlice({
     setError: (state, action: PayloadAction<string | null>) => {
       state.error = action.payload;
     },
+    updateLastMessage: (state, action: PayloadAction<string>) => {
+      if (state.messages.length > 0) {
+        state.messages[state.messages.length - 1].content = action.payload;
+      }
+    },
   },
 });
 
-export const { addMessage, setAiTyping, setError } = chatSlice.actions;
+export const { addMessage, setAiTyping, setError, updateLastMessage } =
+  chatSlice.actions;
 
 export const store = configureStore({
   reducer: {

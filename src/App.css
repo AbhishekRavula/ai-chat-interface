@@ -29,7 +29,8 @@
 .dark {
   --chat-bg: #131314;
 
-  --user-message-bg: #003355;
+  /* --user-message-bg: #003355; */
+  --user-message-bg: #323437;
   --ai-message-bg: #303030;
 
   --user-message-text: white;
