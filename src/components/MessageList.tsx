@@ -32,12 +32,16 @@ const MessageList: React.FC<MessageListProps> = ({ messages }) => {
                 <img
                   src={aiAvatar}
                   alt={`${message.role} avatar`}
-                  className="w-6 h-6 rounded-full mt-2"
+                  className="w-6 h-6 rounded-full mt-3"
                 />
               )}
               <div
-                className={`max-w-xs lg:max-w-md xl:max-w-xl px-4 py-2 rounded-full break-words text-message overflow-x-auto custom-scrollbar 
-                ${message.role === Role.AI ? "rounded-none markdown" : ""}
+                className={`px-4 py-3 rounded-full break-words text-message overflow-x-auto custom-scrollbar 
+                ${
+                  message.role === Role.AI
+                    ? "rounded-none markdown"
+                    : "max-w-xl rounded-3xl"
+                }
                 ${
                   message.role === Role.USER
                     ? "bg-user-message-bg text-user-message-text"
